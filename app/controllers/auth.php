@@ -2,7 +2,7 @@
 class auth{
     protected $user=[
         'admin' => '123456',
-        'tungnguyen'=> '25122005',
+        'lekiki'=> '06092005',
     ];
     public function login(){
         if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST'){
