@@ -19,7 +19,7 @@ class App
             }
         }
         require_once '../app/controllers/' . $this->controller . '.php';
-        $this->controller = new $this->controller; 
+        $this->controller = new $this->controller; //tạo đối tượng controller
         if (isset($urlProcessed[1])) {
             if (method_exists($this->controller, $urlProcessed[1])) {
                 $this->action = $urlProcessed[1];
@@ -30,10 +30,10 @@ class App
         call_user_func_array([$this->controller, $this->action], $this->params);
     }
     public function UrlProcess(){
+    public function UrlProcess()
+    {
         if (isset($_GET['url'])) {
             return explode('/', filter_var(trim($_GET['url'], '/')));
         }
     }
 }
-
-?>

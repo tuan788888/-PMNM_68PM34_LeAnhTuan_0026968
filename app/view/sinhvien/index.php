@@ -1,46 +1,57 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách Sinh viên</title>
-    <title>Danh sách sinh viên</title>
-</head>
-<body>
-    <h1>Danh sách Sinh viên</h1>
-    <p>Đây là trang danh sách sinh viên</p>
-    <h1>Danh sách sinh viên</h1>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
-            text-align: left;
-        }
-        th {
-            background-color: white;
-        }
-    </style>
+<?php $data['title'] = 'Danh sach sinh vien'; ?>
+
+<h1>Danh sach sinh vien</h1>
+
+<div class="toolbar">
+    <a class="button" href="../sinhvien/create">Them moi</a>
+</div>
+
+<?php $sinhviens = $data['sinhviens'] ?? []; ?>
+<?php if (!empty($data['dbError'])): ?>
+    <div class="notice"><?php echo htmlspecialchars($data['dbError']); ?></div>
+<?php endif; ?>
+
+<?php if (!empty($sinhviens)): ?>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>MSSV</th>
-                <th>Họ tên</th>
-                <th>Giới tính</th>
+                <?php foreach (array_keys($sinhviens[0]) as $column): ?>
+                    <th><?php echo htmlspecialchars(ucfirst($column)); ?></th>
+                <?php endforeach; ?>
             </tr>
         </thead>
         <tbody>
-            <?php foreach($sinhvien as $sv): ?>
+            <?php foreach ($sinhviens as $sinhvien): ?>
                 <tr>
-                    <td><?php echo $sv['id']; ?></td>
-                    <td><?php echo $sv['MSSV']; ?></td>
-                    <td><?php echo $sv['HoTen']; ?></td>
-                    <td><?php echo $sv['GioiTinh']; ?></td>
+                    <?php foreach ($sinhvien as $value): ?>
+                        <td><?php echo htmlspecialchars($value); ?></td>
+                    <?php endforeach; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-</body>
-</html>
+
+    <?php
+        $currentPage = $data['currentPage'] ?? 1;
+        $totalPages = $data['totalPages'] ?? 1;
+    ?>
+    <?php if ($totalPages > 1): ?>
+        <div class="pagination">
+            <?php if ($currentPage > 1): ?>
+                <a href="?url=sinhvien/index&page=<?php echo $currentPage - 1; ?>">Truoc</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a class="<?php echo $i === $currentPage ? 'active' : ''; ?>" href="?url=sinhvien/index&page=<?php echo $i; ?>">
+                    <?php echo $i; ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($currentPage < $totalPages): ?>
+                <a href="?url=sinhvien/index&page=<?php echo $currentPage + 1; ?>">Sau</a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <p>Chua co du lieu sinh vien.</p>
+<?php endif; ?>

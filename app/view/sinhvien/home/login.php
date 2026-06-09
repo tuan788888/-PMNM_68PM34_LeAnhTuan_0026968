@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Đăng nhập</h1>
-    <form action="/auth/login" method="POST">
-        <label for="username">Tên người dùng:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Mật khẩu:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Đăng nhập</button>
-    </form>
-</body>
-</html>
+<?php $data['title'] = 'Dang nhap'; ?>
+
+<h1>Login</h1>
+
+<?php if (!empty($data['error'])): ?>
+    <div class="error"><?php echo htmlspecialchars($data['error']); ?></div>
+<?php endif; ?>
+
+<form action="" method="POST">
+    <div class="form-group">
+        <label for="username">UserName:</label>
+        <input type="text" id="username" name="username" placeholder="userName">
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="password">
+    </div>
+
+    <div class="actions">
+        <button type="submit">Login</button>
+    </div>
+</form>

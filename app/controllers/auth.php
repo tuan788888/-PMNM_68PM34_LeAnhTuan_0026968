@@ -1,29 +1,51 @@
 <?php
-class auth{
-    protected $user=[
-        'admin' => '123456',
-        'lekiki'=> '06092005',
+session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+class auth {
+    protected $user = [
+            "lxh"=>"lxh1",
+            "admin"=>"123"
     ];
-    public function login(){
-        if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    public function login() {
+        $error = '';
+
+        if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
-            if(isset($this->user[$username]) && $this->user[$username] == $password){
+
+            if(isset($this->user[$username]) && $this->user[$username] == $password) {
                 $_SESSION['username'] = $username;
-                header('Location:/home/index');
+                header("Location: ../sinhvien/index");
                 exit();
-            }else{
-                header('Location:/home/login');
+            } else {
+                header('Location: login');
                 exit();
+                $error = 'Tai khoan hoac mat khau khong dung.';
             }
         }
+
+        Controller::renderView('sinhvien/login', [
+            'title' => 'Dang nhap',
+            'error' => $error,
+        ]);
+    }
+
+    public function logout()
+    {
+        session_destroy();
+
+        if (isset($_COOKIE['username'])) {
+            setcookie('username', '', time() - 3600, '/');
+        }
+
+        if (isset($_COOKIE['password'])) {
+            setcookie('password', '', time() - 3600, '/');
+        }
+
+        header('Location: login');
+        exit();
     }
 }
-    
-
-    
-
-
-
-
-?>
