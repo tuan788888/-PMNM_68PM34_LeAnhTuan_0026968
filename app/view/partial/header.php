@@ -78,6 +78,15 @@
             background: #777;
         }
 
+        .button.danger {
+            border-color: #dc3545;
+            background: #dc3545;
+        }
+
+        .button.danger:hover {
+            background: #bb2d3b;
+        }
+
         .notice,
         .error {
             max-width: 720px;
@@ -142,6 +151,11 @@
             margin: 0 auto;
         }
 
+        .delete-form {
+            max-width: none;
+            margin: 0;
+        }
+
         .form-group {
             margin-bottom: 14px;
         }
@@ -166,7 +180,6 @@
 </head>
 <body>
     <div class="topbar">
-        <a class="logout-button" href="../auth/logout">Dang xuat</a>
         <?php if (!empty($_SESSION['username'])): ?>
             <a class="logout-button" href="../auth/logout">Dang xuat</a>
         <?php endif; ?>
